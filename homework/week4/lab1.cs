@@ -12,7 +12,8 @@ namespace avg
 			int count = 0;
 			int sum = 0;
 			
-			while(n != -1) {
+			while(n != -1) 
+			{
 				sum = sum +n;
 				string words = Console.ReadLine();
 				n = Convert.ToInt32(words);	
