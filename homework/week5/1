@@ -1,0 +1,33 @@
+using System;
+
+namespace add3
+{
+	class addlab3
+	{
+		static void Main(string[] args)
+		{
+			string [,] array // array
+
+			// 우선 짝수와 홀수를 판별해야함.
+			Console.WriteLine("홀수를 입력해주세요.");
+			
+			int n = Convert.ToInt32(Console.ReadLine());
+			if (n%2 == 0)
+			{
+				Console.WriteLine("짝수를 입력하셨어요 ㅠ^ㅠ 홀수 모르는거 아니죠?");
+				Console.WriteLine("다시 입력해주세요.");
+			}
+			else 
+				array = new string[n,n];
+
+		 	for (int i = 0; i < n, i++)
+			{
+				for (int j = 0; j < n; j++)
+				{
+					array [i, j] = "* ";
+					Console.Write(array[i,j]);
+				}
+				Console.WriteLine();
+		}
+	}
+}
