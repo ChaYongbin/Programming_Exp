@@ -28,7 +28,8 @@ public class NumPuzzle
 	{
 		for (int i = 0; i < mSize; i++)
 			for (int j = 0; j < mSize; j++)
-				if mData[i,j] == 0 {
+				if (mData[i,j] == 0) 
+                {
 					xZero = i;
 					yZero = j;
 					return;
@@ -40,6 +41,13 @@ public class NumPuzzle
 		ZeroLocation();
 		
 	}
+
+    private void swap(ref int n, ref int m)
+    {
+        int tmp = n;
+        n = m;
+        m = tmp;
+    }
 }
 
 class Test

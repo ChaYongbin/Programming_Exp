@@ -1,0 +1,3 @@
+Week 6 - HomeWork 
+
+NumPuzzle.cs 구현 / swap 구현 완료
