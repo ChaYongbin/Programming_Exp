@@ -17,7 +17,7 @@ namespace HangmanGame
 {
     public partial class Form1 : Form
     {
-        string l = "STRUCTURES"; // 행맨 문제 출제
+        string l; // 행맨 문제 출제
 
         public Form1()
         {
@@ -41,11 +41,11 @@ namespace HangmanGame
 
         private void button27_Click(object sender, EventArgs e)
         {
-
-            for (int i = 0; i < l.Length; i++)  // 문제 출제 라벨 생성과 밑줄 ~~
-            {
-                Qprint(i, "   ");
-            }
+            
+            string[] q20 = new string[] { "object", "desposit", "nuclear", "pollution", "convert", "trip", "motif", "remote", "victor", "enroll", "horror" };
+            Random r = new Random();
+            l = q20[r.Next(0, 10)];
+            QBox();
         }
 
         private void label1_Click_2(object sender, EventArgs e)
@@ -75,22 +75,39 @@ namespace HangmanGame
                     if (oneword == l[i].ToString())
                     {
                         Qprint(i, textBox1.Text);
+                        
                     }
                 }
                 label4.Text += " "  + textBox1.Text;
                 textBox1.Text = "";
+                QBox();
             }
         }
-        private void Qprint(int w, string spe)
+        public void Qprint(int w, string spe)
         {
             Label[] test = new Label[50];
             test[w] = new Label();
             Controls.Add(test[w]);
-            test[w].Location = new System.Drawing.Point(50 + 50 * w, 100);
+            test[w].Location = new System.Drawing.Point(51 + 50 * w, 101);
             test[w].Name = "word" + w.ToString();
-            test[w].Size = new System.Drawing.Size(48, 50);
+            test[w].Size = new System.Drawing.Size(47, 49);
             test[w].Text = spe;
-            test[w].Font = new System.Drawing.Font("맑은 고딕", 20.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            test[w].Font = new System.Drawing.Font("맑은 고딕", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            
+        }
+        public void QBox()
+        {
+            
+
+            Graphics g = this.CreateGraphics();
+            Pen blackPen = new Pen(Color.Black);
+
+            for (int i = 0; i < l.Length; i++)  // 문제 출제 라벨 생성과 밑줄 ~~
+            {
+                g.DrawRectangle(blackPen, 50 + 50 * i, 100, 48, 50);
+                //   Qprint(i, "   ");
+            }
+            
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -100,7 +117,27 @@ namespace HangmanGame
 
         private void label4_Click(object sender, EventArgs e)
         {
+            
+        }
 
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (textBox2.Text == l)
+                {
+                    MessageBox.Show("정답입니다. 좀 대단하군 ㅋㅋ");
+                }
+                else
+                {
+                    MessageBox.Show("으이그... 다시해라!!!");
+                }
+            }
         }
     }
 }
