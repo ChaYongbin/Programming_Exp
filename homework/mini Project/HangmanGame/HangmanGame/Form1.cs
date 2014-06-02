@@ -18,10 +18,12 @@ namespace HangmanGame
     public partial class Form1 : Form
     {
         string l; // 행맨 문제 출제
+        Graphics g;
 
         public Form1()
         {
             InitializeComponent();
+            g = this.CreateGraphics();
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -98,16 +100,14 @@ namespace HangmanGame
         public void QBox()
         {
             
-
-            Graphics g = this.CreateGraphics();
             Pen blackPen = new Pen(Color.Black);
 
             for (int i = 0; i < l.Length; i++)  // 문제 출제 라벨 생성과 밑줄 ~~
             {
                 g.DrawRectangle(blackPen, 50 + 50 * i, 100, 48, 50);
-                //   Qprint(i, "   ");
+                
             }
-            
+            g.Dispose();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -138,6 +138,17 @@ namespace HangmanGame
                     MessageBox.Show("으이그... 다시해라!!!");
                 }
             }
+        }
+        public void Clear()
+        {
+            Color color;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //e.Graphics.Clear(Color.Teal);
+            //Controls.Clear();
+            //InitializeComponent();
         }
     }
 }
