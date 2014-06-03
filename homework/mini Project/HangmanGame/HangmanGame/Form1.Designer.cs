@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button27 = new System.Windows.Forms.Button();
+            this.Start_Button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +42,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +54,7 @@
             this.gameToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(686, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(784, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -77,16 +79,16 @@
             this.stageToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.stageToolStripMenuItem.Text = "Stage";
             // 
-            // button27
+            // Start_Button
             // 
-            this.button27.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.button27.Location = new System.Drawing.Point(23, 494);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(57, 57);
-            this.button27.TabIndex = 35;
-            this.button27.Text = "START";
-            this.button27.UseVisualStyleBackColor = false;
-            this.button27.Click += new System.EventHandler(this.button27_Click);
+            this.Start_Button.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.Start_Button.Location = new System.Drawing.Point(23, 494);
+            this.Start_Button.Name = "Start_Button";
+            this.Start_Button.Size = new System.Drawing.Size(57, 57);
+            this.Start_Button.TabIndex = 35;
+            this.Start_Button.Text = "START";
+            this.Start_Button.UseVisualStyleBackColor = false;
+            this.Start_Button.Click += new System.EventHandler(this.button27_Click);
             // 
             // label1
             // 
@@ -102,7 +104,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("맑은 고딕", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox1.Location = new System.Drawing.Point(205, 494);
+            this.textBox1.Location = new System.Drawing.Point(290, 494);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(57, 57);
             this.textBox1.TabIndex = 37;
@@ -113,7 +115,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Location = new System.Drawing.Point(113, 507);
+            this.label2.Location = new System.Drawing.Point(198, 507);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 24);
             this.label2.TabIndex = 38;
@@ -124,7 +126,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.Location = new System.Drawing.Point(288, 507);
+            this.label3.Location = new System.Drawing.Point(386, 507);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 24);
             this.label3.TabIndex = 39;
@@ -134,7 +136,7 @@
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("맑은 고딕", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox2.Location = new System.Drawing.Point(392, 494);
+            this.textBox2.Location = new System.Drawing.Point(490, 494);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(282, 57);
             this.textBox2.TabIndex = 40;
@@ -144,9 +146,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Location = new System.Drawing.Point(23, 409);
+            this.groupBox1.Location = new System.Drawing.Point(23, 387);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(651, 54);
+            this.groupBox1.Size = new System.Drawing.Size(749, 76);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Used Spelling";
@@ -155,29 +157,42 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.Font = new System.Drawing.Font("나눔고딕", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label4.ForeColor = System.Drawing.Color.Blue;
             this.label4.Location = new System.Drawing.Point(18, 24);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 17);
+            this.label4.Size = new System.Drawing.Size(0, 21);
             this.label4.TabIndex = 0;
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(625, 365);
+            this.button1.Location = new System.Drawing.Point(23, 433);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(0, 0);
             this.button1.TabIndex = 42;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.button2.Location = new System.Drawing.Point(115, 494);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(57, 57);
+            this.button2.TabIndex = 43;
+            this.button2.Text = "Reset";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(686, 563);
+            this.BackColor = System.Drawing.Color.LavenderBlush;
+            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox2);
@@ -185,11 +200,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button27);
+            this.Controls.Add(this.Start_Button);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -205,7 +222,7 @@
         private System.Windows.Forms.ToolStripMenuItem gameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stageToolStripMenuItem;
-        private System.Windows.Forms.Button button27;
+        private System.Windows.Forms.Button Start_Button;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
@@ -214,6 +231,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 
