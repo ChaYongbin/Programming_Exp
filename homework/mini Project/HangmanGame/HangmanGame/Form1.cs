@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 /*
  * 이 게임은 NHN NEXT 프로그래밍 연습 수업에 진행한 mini project입니다.
@@ -17,8 +18,10 @@ namespace HangmanGame
 {
     public partial class Form1 : Form
     {
-        string l; // 행맨 문제 출제
+        string l = "0"; // 행맨 문제 출제
         Label[] test = new Label[50];
+       
+
         public Form1()
         {
             InitializeComponent();
@@ -54,8 +57,9 @@ namespace HangmanGame
                 "double","excite","experiment","explain","kindergarten",
                 "production","performance","semester","somewhere","volunteer",
                 "wisdom","wonder","temple","production","int"};
+
             Random r = new Random();
-            l = q10[r.Next(0, 29)];
+            l = q10[r.Next(0, 20)];
             QBox(l);
         }
 
@@ -77,22 +81,32 @@ namespace HangmanGame
         // 원하는 철자를 입력하여 엔터키를 누르면 문제와 같은 철자가 있는지 확인하고 입력한다.
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            
+            string[] tcw = label4.Text.Split();
+
             if (e.KeyCode == Keys.Enter)
             {
-                string oneword = textBox1.Text;
-
-                for (int i = 0; i < l.Length; i++)
+                if (l == "0")
                 {
-                    if (oneword == l[i].ToString())
-                    {
-                        Qprint(i, textBox1.Text);
-                    }
+                    MessageBox.Show("start 버튼을 눌러 시작 해주세요");
+                    textBox1.Text = "";
                 }
-                label4.Text += " "  + textBox1.Text;
-                textBox1.Text = "";
-                QBox(l);
+                else
+                {
+                    string oneword = textBox1.Text;
+
+                    for (int j = 0; j < l.Length; j++)
+                    {
+                        if (oneword == l[j].ToString())
+                        {
+                            Qprint(j, textBox1.Text);
+                        }
+                    }
+                    label4.Text += " " + textBox1.Text;
+                    textBox1.Text = "";
+                    QBox(l);
+                }
             }
+
         }
 
         // 리셋시 입력한 모든 글자를 지운다. 
@@ -150,6 +164,7 @@ namespace HangmanGame
                 if (textBox2.Text == l)
                 {
                     MessageBox.Show("정답입니다. 좀 대단하군 ㅋㅋ");
+                    Reset();
                 }
                 else
                 {
@@ -176,10 +191,28 @@ namespace HangmanGame
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Reset();
+        }
+
+        private void Reset()
+        {
             BoxClear();
             worldclear();
             label4.Text = "";
+            textBox1.Text = "";
             textBox2.Text = "";
+        }
+
+        private void TestCheckWord()
+        {
+            string[] tcw = label4.Text.Split();
+            for (int i = 0; i < label4.Text.Length; i++)
+            {
+                if (tcw[i] == textBox1.Text)
+                {
+
+                }
+            }
         }
     }
 }

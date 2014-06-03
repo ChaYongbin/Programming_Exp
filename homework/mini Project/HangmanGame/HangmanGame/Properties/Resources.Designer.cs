@@ -61,12 +61,64 @@ namespace HangmanGame.Properties {
         }
         
         /// <summary>
-        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        ///   aardvark
+        ///aardwolf
+        ///aaron
+        ///aback
+        ///abacus
+        ///abaft
+        ///abalone
+        ///abandon
+        ///abandoned
+        ///abandonment
+        ///abandons
+        ///abase
+        ///abased
+        ///abasement
+        ///abash
+        ///abashed
+        ///abate
+        ///abated
+        ///abatement
+        ///abates
+        ///abattoir
+        ///abattoirs
+        ///abbe
+        ///abbess
+        ///abbey
+        ///abbeys
+        ///abbot
+        ///abbots
+        ///abbreviate
+        ///abbreviated
+        ///abbreviates
+        ///abbreviating
+        ///abbreviation
+        ///abbreviations
+        ///abdicate
+        ///abdicated
+        ///abdicates
+        ///abdicating
+        ///abdication
+        ///abdomen
+        ///abdomens
+        ///abdominal
+        ///abduct
+        ///abducted
+        ///abducting
+        ///abduction
+        ///abductions
+        ///abductor
+        ///abductors
+        ///abducts
+        ///abe
+        ///abeam
+        ///abel
+        ///abe[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap _138785879776 {
+        internal static string wordlist {
             get {
-                object obj = ResourceManager.GetObject("138785879776", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("wordlist", resourceCulture);
             }
         }
     }
