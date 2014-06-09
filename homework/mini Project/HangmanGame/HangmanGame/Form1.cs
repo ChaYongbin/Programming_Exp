@@ -19,18 +19,23 @@ namespace HangmanGame
     public partial class Form1 : Form
     {
         string l = "0"; // 행맨 문제 출제
-        Label[] test = new Label[50];
-       
+        Label[] test = new Label[50]; //레이블 제작에 초기화
+        int score = 0; // score 변수 초기화
+        bool suc; // 정답을 맞았는지 확인하는 변수
 
         public Form1()
         {
             InitializeComponent();
             
-            for (int idx = 0; idx < 50; idx++)
+            for (int idx = 0; idx < 50; idx++) // 레이블 생성
             {
                 test[idx] = new Label();
                 Controls.Add(test[idx]);
             }
+
+            score = 400; // 초기 스코어
+
+            suc = true;
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -50,17 +55,13 @@ namespace HangmanGame
         // 버튼을 클릭을 하면, 램덤으로 문제를 생성하고, Box를 그려준다.
         private void button27_Click(object sender, EventArgs e) // StartButton
         {
-            string[] q10 = new string[] { 
-                "object", "desposit", "nuclear", "pollution", "convert", 
-                "trip", "motif", "remote", "victor", "enroll", 
-                "horror", "accident", "advice", "aisle", "alphabet",
-                "double","excite","experiment","explain","kindergarten",
-                "production","performance","semester","somewhere","volunteer",
-                "wisdom","wonder","temple","production","int"};
+            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\chayongbin\Documents\GitHub\pex2014\homework\mini Project\HangmanGame\HangmanGame\Resources\wordlist.txt");
+            // wordlist text file
 
             Random r = new Random();
-            l = q10[r.Next(0, 20)];
+            l = lines[r.Next(0, 58110)];
             QBox(l);
+            ScoreView();
         }
 
         private void label1_Click_2(object sender, EventArgs e)
@@ -92,13 +93,24 @@ namespace HangmanGame
                 }
                 else
                 {
-                    string oneword = textBox1.Text;
+                    //string oneword = textBox1.Text;
 
                     for (int j = 0; j < l.Length; j++)
                     {
-                        if (oneword == l[j].ToString())
+                        if (textBox1.Text == l[j].ToString())
                         {
                             Qprint(j, textBox1.Text);
+                        }
+                    }
+                    //label4.Text += " " + textBox1.Text;
+                    //TestCheckWord();
+
+                    for (int i = 0; i < label4.Text.Length; i++)
+                    {
+                        if (tcw[i] == textBox1.Text)
+                        {
+                            MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
+                            textBox1.Text = "";
                         }
                     }
                     label4.Text += " " + textBox1.Text;
@@ -107,6 +119,31 @@ namespace HangmanGame
                 }
             }
 
+        }
+
+        // 게임 스코어를 기록하는 메소드이다. 
+        private void GameScore()
+        {
+            // 최종 답을 맞출 때 스코어 정산.
+            if (suc == true)
+            {
+                score += 100;
+                suc = false;
+            }
+            else
+            {
+                score -= 100;
+                suc = true;
+            }
+
+            // 철자 입력할 때 스코어 정산.
+        }
+
+        // 게임 스코어를 화면에 보여주는 메소드
+        private void ScoreView()
+        {
+            GameScore();
+            label6.Text = score.ToString();
         }
 
         // 리셋시 입력한 모든 글자를 지운다. 
@@ -124,7 +161,6 @@ namespace HangmanGame
         // x번째 라벨의 글자를 넣는다.
         public void Qprint(int idx, string spe)
         {
-            
             test[idx].Name = "word" + idx.ToString();
             test[idx].Location = new System.Drawing.Point(51 + 50 * idx, 101);
             test[idx].Size = new System.Drawing.Size(47, 49);
@@ -157,6 +193,7 @@ namespace HangmanGame
 
         }
 
+        // 정답이 맞는지 아닌지 확인한다.
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -164,14 +201,20 @@ namespace HangmanGame
                 if (textBox2.Text == l)
                 {
                     MessageBox.Show("정답입니다. 좀 대단하군 ㅋㅋ");
+                    suc = true;
+                    ScoreView();
                     Reset();
                 }
                 else
                 {
+                    suc = false;
                     MessageBox.Show("으이그... 다시해라!!!");
+                    ScoreView();
                 }
             }
         }
+
+        // 문제 박스를 지운다.
         public void BoxClear()
         {
             Graphics g = this.CreateGraphics();
@@ -189,11 +232,13 @@ namespace HangmanGame
 
         }
 
+        // 리셋 버튼을 통해서 리셋을 진행을 한다.
         private void button2_Click(object sender, EventArgs e)
         {
             Reset();
         }
 
+        // 리셋 메소드를 만드는데, 이때 철자 적는 칸과 답을 적는 칸, 단어 레이블을 초기화를 진행을 한다. 
         private void Reset()
         {
             BoxClear();
@@ -203,6 +248,7 @@ namespace HangmanGame
             textBox2.Text = "";
         }
 
+        // 사용한 스펠링를 체크하는 메소드를 체크하는 테스트를 한다.
         private void TestCheckWord()
         {
             string[] tcw = label4.Text.Split();
@@ -210,9 +256,16 @@ namespace HangmanGame
             {
                 if (tcw[i] == textBox1.Text)
                 {
-
+                    MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
+                    textBox1.Text = "";
                 }
             }
+            label4.Text += " " + textBox1.Text;
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
