@@ -22,12 +22,12 @@ namespace HangmanGame
         Label[] test = new Label[50]; //레이블 제작에 초기화
         int score = 0; // score 변수 초기화
         bool suc; // 정답을 맞았는지 확인하는 변수
-        string[] tcw = new string[100];
+        int level = 1; // 레벨 초기화
 
         public Form1()
         {
             InitializeComponent();
-            
+
             for (int idx = 0; idx < 50; idx++) // 레이블 생성
             {
                 test[idx] = new Label();
@@ -38,6 +38,9 @@ namespace HangmanGame
 
             suc = true;
         }
+
+        // Level 별로 난이도를 다르게 한다. (Level 별 단어 길이 설정)
+
         private void label1_Click(object sender, EventArgs e)
         {
   
@@ -85,50 +88,50 @@ namespace HangmanGame
         {
             if (e.KeyCode == Keys.Enter)
             {
-                tcw = label4.Text.Split(' ');
+                string[] tcw = label4.Text.Split(' ');
 
-                if (l == "0")
+                if (l == string.Empty)
                 {
                     MessageBox.Show("start 버튼을 눌러 시작 해주세요");
                     textBox1.Text = "";
                 }
-                else
-                /* 버그 발생지점
+                 /* 버그 발생지점
                  * 스펠링이 두 개 겹치는 경우에 에러가 나면서 오류가 뜸.
                  * 문제 해결 방안. 
                  * TestCheckWord()를 추가 해서 발생한 오류이기 때문에 이 점을 해결해야한다. 
                  * 다른 오류는 없지만 이 문제가 해결되야지 점수 측정에 도움이 된다.
-                 * list의 add & remove 를 구현하여 한다면 어떻게 될까?
                  */
+                else
                 {
-                    //string oneword = textBox1.Text;
-
                     for (int j = 0; j < l.Length; j++)
                     {
                         if (textBox1.Text == l[j].ToString())
                         {
                             Qprint(j, textBox1.Text);
+                            score += 50;
+                            ScoreView();
                         }
                     }
-                    //label4.Text += " " + textBox1.Text;
-                    //TestCheckWord();
 
-                    for (int i = 0; i < tcw.Length; i++)
+                    for (int i = 0; i < tcw.Length; i++) // label4.Text.Length로 할 경우 빈 공백도 길이로 간주하기 떄문에 오류가 생긴다. tcw로 하는 것이 좋음. 
                     {
-                        if (tcw[i] == textBox1.Text) // 이 부분의 오류를 제대로 이해를 하지 못하겠음.
+                        if (tcw[i] == textBox1.Text)
                         {
                             MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
                             textBox1.Text = string.Empty;
-                            break;
+                            break; 
+                            // break 를 이용하여 버그 해결
                         }
                     }
-                    // 배열 방식을 사용하지 말고 리스트 방식을 이용하여 search후 add와 remove를 하는 방식으로 가자.
-                    if (textBox1.Text != string.Empty)
+
+                    // 사용한 스펠링을 알려주고 빈 공백이 생기는 버그를 해결. 
+                    if (textBox1.Text != string.Empty) 
                     {
                         label4.Text += " " + textBox1.Text;
                         textBox1.Text = string.Empty;
+                        score -= 50;
+                        ScoreView();
                     }
-                    // textBox1.Text를 ""으로 하는 것과 null로 하는 것이 어떤 차이가 있을 지....
 
                     QBox(l);
                 }
@@ -149,14 +152,12 @@ namespace HangmanGame
                 score -= 100;
                 suc = true;
             }
-
             // 철자 입력할 때 스코어 정산.
         }
 
         // 게임 스코어를 화면에 보여주는 메소드
         private void ScoreView()
         {
-            GameScore();
             label6.Text = score.ToString();
         }
 
@@ -194,17 +195,14 @@ namespace HangmanGame
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void label4_Click(object sender, EventArgs e)
         {
-            
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         // 정답이 맞는지 아닌지 확인한다.
@@ -216,6 +214,7 @@ namespace HangmanGame
                 {
                     MessageBox.Show("정답입니다. 좀 대단하군 ㅋㅋ");
                     suc = true;
+                    GameScore();
                     ScoreView();
                     Reset();
                 }
@@ -223,6 +222,7 @@ namespace HangmanGame
                 {
                     suc = false;
                     MessageBox.Show("으이그... 다시해라!!!");
+                    GameScore();
                     ScoreView();
                 }
             }
@@ -238,12 +238,10 @@ namespace HangmanGame
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         // 리셋 버튼을 통해서 리셋을 진행을 한다.
@@ -263,28 +261,32 @@ namespace HangmanGame
         }
 
         // 사용한 스펠링를 체크하는 메소드를 체크하는 테스트를 한다.
-        private void TestCheckWord()
-        {
-            string[] tcw = label4.Text.Split();
-            for (int i = 0; i < label4.Text.Length; i++)
-            {
-                if (tcw[i] == textBox1.Text)
-                {
-                    MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
-                    textBox1.Text = "";
-                }
-            }
-            label4.Text += " " + textBox1.Text;
-        }
-
         private void label6_Click(object sender, EventArgs e)
         {
-
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             QBox(l);
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // 점수가 0점 일 때 일어나는 이벤트
+        private void GameOver()
+        {
+            if (score == 0)
+            {
+                MessageBox.Show("");
+            }
         }
     }
 }
