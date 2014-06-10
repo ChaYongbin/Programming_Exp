@@ -18,10 +18,11 @@ namespace HangmanGame
 {
     public partial class Form1 : Form
     {
-        string l = "0"; // 행맨 문제 출제
+        string l = string.Empty; // 행맨 문제 출제
         Label[] test = new Label[50]; //레이블 제작에 초기화
         int score = 0; // score 변수 초기화
         bool suc; // 정답을 맞았는지 확인하는 변수
+        string[] tcw = new string[100];
 
         public Form1()
         {
@@ -82,16 +83,23 @@ namespace HangmanGame
         // 원하는 철자를 입력하여 엔터키를 누르면 문제와 같은 철자가 있는지 확인하고 입력한다.
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            string[] tcw = label4.Text.Split();
-
             if (e.KeyCode == Keys.Enter)
             {
+                tcw = label4.Text.Split(' ');
+
                 if (l == "0")
                 {
                     MessageBox.Show("start 버튼을 눌러 시작 해주세요");
                     textBox1.Text = "";
                 }
                 else
+                /* 버그 발생지점
+                 * 스펠링이 두 개 겹치는 경우에 에러가 나면서 오류가 뜸.
+                 * 문제 해결 방안. 
+                 * TestCheckWord()를 추가 해서 발생한 오류이기 때문에 이 점을 해결해야한다. 
+                 * 다른 오류는 없지만 이 문제가 해결되야지 점수 측정에 도움이 된다.
+                 * list의 add & remove 를 구현하여 한다면 어떻게 될까?
+                 */
                 {
                     //string oneword = textBox1.Text;
 
@@ -105,20 +113,26 @@ namespace HangmanGame
                     //label4.Text += " " + textBox1.Text;
                     //TestCheckWord();
 
-                    for (int i = 0; i < label4.Text.Length; i++)
+                    for (int i = 0; i < tcw.Length; i++)
                     {
-                        if (tcw[i] == textBox1.Text)
+                        if (tcw[i] == textBox1.Text) // 이 부분의 오류를 제대로 이해를 하지 못하겠음.
                         {
                             MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
-                            textBox1.Text = "";
+                            textBox1.Text = string.Empty;
+                            break;
                         }
                     }
-                    label4.Text += " " + textBox1.Text;
-                    textBox1.Text = "";
+                    // 배열 방식을 사용하지 말고 리스트 방식을 이용하여 search후 add와 remove를 하는 방식으로 가자.
+                    if (textBox1.Text != string.Empty)
+                    {
+                        label4.Text += " " + textBox1.Text;
+                        textBox1.Text = string.Empty;
+                    }
+                    // textBox1.Text를 ""으로 하는 것과 null로 하는 것이 어떤 차이가 있을 지....
+
                     QBox(l);
                 }
             }
-
         }
 
         // 게임 스코어를 기록하는 메소드이다. 
@@ -266,6 +280,11 @@ namespace HangmanGame
         private void label6_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            QBox(l);
         }
     }
 }
