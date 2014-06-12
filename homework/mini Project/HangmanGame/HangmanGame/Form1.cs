@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Speech.Recognition;
+using System.Speech.Synthesis;
+using System.Threading; 
 
 /*
  * 이 게임은 NHN NEXT 프로그래밍 연습 수업에 진행한 mini project입니다.
@@ -23,6 +26,7 @@ namespace HangmanGame
         int score = 0; // score 변수 초기화
         bool suc; // 정답을 맞았는지 확인하는 변수
         int level = 1; // 레벨 초기화
+        StreamReader sr;
 
         public Form1()
         {
@@ -38,6 +42,12 @@ namespace HangmanGame
 
             suc = true;
         }
+
+        // 음성인식 기능 선언
+        SpeechSynthesizer sSynth = new SpeechSynthesizer();
+        PromptBuilder pBuilder = new PromptBuilder();
+        SpeechRecognitionEngine sRecognize = new SpeechRecognitionEngine();
+       
 
         // Level 별로 난이도를 다르게 한다. (Level 별 단어 길이 설정)
 
@@ -59,8 +69,12 @@ namespace HangmanGame
         // 버튼을 클릭을 하면, 램덤으로 문제를 생성하고, Box를 그려준다.
         private void button27_Click(object sender, EventArgs e) // StartButton
         {
-            string[] lines = System.IO.File.ReadAllLines(@"C:\Users\chayongbin\Documents\GitHub\pex2014\homework\mini Project\HangmanGame\HangmanGame\Resources\wordlist.txt");
-            // wordlist text file
+            BoxClear();
+            worldclear();
+
+            string[] lines = System.IO.File.ReadAllLines(openFileDialog1.FileName);
+                // wordlist text file
+            
 
             Random r = new Random();
             l = lines[r.Next(0, 58110)];
@@ -233,7 +247,7 @@ namespace HangmanGame
         {
             Graphics g = this.CreateGraphics();
             Brush back = Brushes.LavenderBlush;
-            g.FillRectangle(back, 50, 100, 700, 150);
+            g.FillRectangle(back, 50, 100, 900, 200);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -253,8 +267,9 @@ namespace HangmanGame
         // 리셋 메소드를 만드는데, 이때 철자 적는 칸과 답을 적는 칸, 단어 레이블을 초기화를 진행을 한다. 
         private void Reset()
         {
-            BoxClear();
+            
             worldclear();
+            BoxClear();
             label4.Text = "";
             textBox1.Text = "";
             textBox2.Text = "";
@@ -288,5 +303,96 @@ namespace HangmanGame
                 MessageBox.Show("");
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            button3.Enabled = false;
+            button2.Enabled = true;
+            Choices sList = new Choices();
+            sList.Add(new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" });
+            Grammar gr = new Grammar(new GrammarBuilder(sList));
+            try
+            {
+                sRecognize.RequestRecognizerUpdate();
+                sRecognize.LoadGrammar(gr);
+                sRecognize.SpeechRecognized += sRecognize_SpeechRecognized;
+                sRecognize.SetInputToDefaultAudioDevice();
+                sRecognize.RecognizeAsync(RecognizeMode.Multiple);
+                sRecognize.Recognize();
+                sRecognize = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("fr-KR"));﻿
+            }
+
+            catch
+            {
+                return;
+            }
+        }
+
+        private void sRecognize_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            if (e.Result.Text == "game over")
+            {
+                Application.Exit();
+            }
+            else
+            {
+                textBox1.Text = textBox1.Text + " " + e.Result.Text.ToString();
+
+                string[] tcw = label4.Text.Split(' ');
+
+                for (int j = 0; j < l.Length; j++)
+                {
+                    if (e.Result.Text.ToString() == l[j].ToString())
+                    {
+                        Qprint(j, e.Result.Text.ToString());
+                        score += 50;
+                        ScoreView();
+                    }
+                }
+
+                for (int i = 0; i < tcw.Length; i++) // label4.Text.Length로 할 경우 빈 공백도 길이로 간주하기 떄문에 오류가 생긴다. tcw로 하는 것이 좋음. 
+                {
+                    if (tcw[i] == e.Result.Text.ToString())
+                    {
+                        MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
+                        break;
+                        // break 를 이용하여 버그 해결
+                    }
+                }
+
+                // 사용한 스펠링을 알려주고 빈 공백이 생기는 버그를 해결. 
+                if (e.Result.Text.ToString() != string.Empty)
+                {
+                    label4.Text += " " + e.Result.Text.ToString();
+                    score -= 50;
+                    ScoreView();
+                }
+
+                QBox(l);
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            sRecognize.RecognizeAsyncStop();
+            button3.Enabled = true;
+            button4.Enabled = false;
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                sr = new StreamReader(openFileDialog1.FileName);
+                
+                sr.Close();
+            }
+        }
+
+        private void button2_MouseDown(object sender, MouseEventArgs e)
+        {
+            Reset();
+        }
+
     }
 }

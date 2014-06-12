@@ -50,8 +50,6 @@ namespace speech_recognition_studing
                 sRecognize.RecognizeAsync(RecognizeMode.Multiple);
                 sRecognize.Recognize();
                 sRecognize = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("fr-KR"));﻿
-
-
             }
 
             catch
@@ -74,6 +72,11 @@ namespace speech_recognition_studing
         }
 
         private void button3_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
         {
             sRecognize.RecognizeAsyncStop();
             button2.Enabled = true;
