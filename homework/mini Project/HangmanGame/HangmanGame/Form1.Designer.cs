@@ -45,7 +45,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -61,7 +60,7 @@
             this.gameToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(984, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(968, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -86,11 +85,12 @@
             this.stageToolStripMenuItem.Name = "stageToolStripMenuItem";
             this.stageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stageToolStripMenuItem.Text = "Stage";
+            this.stageToolStripMenuItem.Click += new System.EventHandler(this.stageToolStripMenuItem_Click);
             // 
             // Start_Button
             // 
             this.Start_Button.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.Start_Button.Location = new System.Drawing.Point(23, 494);
+            this.Start_Button.Location = new System.Drawing.Point(23, 485);
             this.Start_Button.Name = "Start_Button";
             this.Start_Button.Size = new System.Drawing.Size(57, 57);
             this.Start_Button.TabIndex = 35;
@@ -112,7 +112,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("맑은 고딕", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox1.Location = new System.Drawing.Point(290, 494);
+            this.textBox1.Location = new System.Drawing.Point(290, 485);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(57, 57);
             this.textBox1.TabIndex = 37;
@@ -123,7 +123,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Location = new System.Drawing.Point(198, 507);
+            this.label2.Location = new System.Drawing.Point(195, 502);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 24);
             this.label2.TabIndex = 38;
@@ -134,7 +134,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.Location = new System.Drawing.Point(386, 507);
+            this.label3.Location = new System.Drawing.Point(383, 502);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 24);
             this.label3.TabIndex = 39;
@@ -144,7 +144,7 @@
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("맑은 고딕", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.textBox2.Location = new System.Drawing.Point(490, 494);
+            this.textBox2.Location = new System.Drawing.Point(490, 485);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(282, 57);
             this.textBox2.TabIndex = 40;
@@ -187,7 +187,7 @@
             // button2
             // 
             this.button2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.button2.Location = new System.Drawing.Point(115, 494);
+            this.button2.Location = new System.Drawing.Point(105, 485);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(57, 57);
             this.button2.TabIndex = 43;
@@ -217,17 +217,6 @@
             this.label6.Text = "0";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label7.Location = new System.Drawing.Point(715, 37);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 36);
-            this.label7.TabIndex = 46;
-            this.label7.Text = "Level .";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -240,21 +229,21 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(844, 238);
+            this.button3.Location = new System.Drawing.Point(788, 387);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(75, 155);
             this.button3.TabIndex = 48;
-            this.button3.Text = "start";
+            this.button3.Text = "음성인식 시작";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(844, 290);
+            this.button4.Location = new System.Drawing.Point(881, 387);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(75, 155);
             this.button4.TabIndex = 49;
-            this.button4.Text = "stop";
+            this.button4.Text = "인식 중지";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -267,11 +256,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LavenderBlush;
-            this.ClientSize = new System.Drawing.Size(984, 562);
+            this.ClientSize = new System.Drawing.Size(968, 554);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button2);
@@ -317,7 +305,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;

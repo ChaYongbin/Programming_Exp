@@ -28,6 +28,7 @@ namespace HangmanGame
         int level = 1; // 레벨 초기화
         StreamReader sr;
 
+
         public Form1()
         {
             InitializeComponent();
@@ -47,6 +48,21 @@ namespace HangmanGame
         SpeechSynthesizer sSynth = new SpeechSynthesizer();
         PromptBuilder pBuilder = new PromptBuilder();
         SpeechRecognitionEngine sRecognize = new SpeechRecognitionEngine();
+
+        private void draw()
+        {
+            Bitmap screen = new Bitmap(1000, 561);
+            Graphics g4 = Graphics.FromImage(screen);
+
+            Graphics g = this.CreateGraphics();
+            Bitmap back = Properties.Resources.back;
+            g4.DrawImage(back, 0, 0);
+
+            g.DrawImage(screen, 0, 0);
+
+            g4.Dispose();
+            g.Dispose();
+        }
        
 
         // Level 별로 난이도를 다르게 한다. (Level 별 단어 길이 설정)
@@ -109,12 +125,7 @@ namespace HangmanGame
                     MessageBox.Show("start 버튼을 눌러 시작 해주세요");
                     textBox1.Text = "";
                 }
-                 /* 버그 발생지점
-                 * 스펠링이 두 개 겹치는 경우에 에러가 나면서 오류가 뜸.
-                 * 문제 해결 방안. 
-                 * TestCheckWord()를 추가 해서 발생한 오류이기 때문에 이 점을 해결해야한다. 
-                 * 다른 오류는 없지만 이 문제가 해결되야지 점수 측정에 도움이 된다.
-                 */
+
                 else
                 {
                     for (int j = 0; j < l.Length; j++)
@@ -304,10 +315,11 @@ namespace HangmanGame
             }
         }
 
+        // 음성인식 시작하는 버튼
         private void button3_Click(object sender, EventArgs e)
         {
             button3.Enabled = false;
-            button2.Enabled = true;
+            button4.Enabled = true;
             Choices sList = new Choices();
             sList.Add(new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" });
             Grammar gr = new Grammar(new GrammarBuilder(sList));
@@ -319,7 +331,7 @@ namespace HangmanGame
                 sRecognize.SetInputToDefaultAudioDevice();
                 sRecognize.RecognizeAsync(RecognizeMode.Multiple);
                 sRecognize.Recognize();
-                sRecognize = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("fr-KR"));﻿
+                sRecognize.RecognizeAsyncStop();
             }
 
             catch
@@ -330,45 +342,45 @@ namespace HangmanGame
 
         private void sRecognize_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
+            string voice = e.Result.Text.ToString();
             if (e.Result.Text == "game over")
             {
                 Application.Exit();
             }
             else
             {
-                textBox1.Text = textBox1.Text + " " + e.Result.Text.ToString();
-
                 string[] tcw = label4.Text.Split(' ');
 
                 for (int j = 0; j < l.Length; j++)
                 {
-                    if (e.Result.Text.ToString() == l[j].ToString())
+                    if (voice == l[j].ToString())
                     {
-                        Qprint(j, e.Result.Text.ToString());
+                        Qprint(j, voice);
                         score += 50;
                         ScoreView();
                     }
                 }
 
-                for (int i = 0; i < tcw.Length; i++) // label4.Text.Length로 할 경우 빈 공백도 길이로 간주하기 떄문에 오류가 생긴다. tcw로 하는 것이 좋음. 
+                for (int i = 0; i < tcw.Length; i++) 
                 {
-                    if (tcw[i] == e.Result.Text.ToString())
+                    if (tcw[i] == voice)
                     {
-                        MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
-                        break;
-                        // break 를 이용하여 버그 해결
+                        // MessageBox.Show("사용한 스펠링입니다. 다시 한 번 확인해보세요.");
+                        goto JUMP;
                     }
                 }
 
-                // 사용한 스펠링을 알려주고 빈 공백이 생기는 버그를 해결. 
-                if (e.Result.Text.ToString() != string.Empty)
-                {
-                    label4.Text += " " + e.Result.Text.ToString();
-                    score -= 50;
-                    ScoreView();
-                }
+                label4.Text = label4.Text + " " + voice;
+                score -= 50;
+                ScoreView();
 
+            JUMP:
+                sRecognize.RecognizeAsyncStop();
                 QBox(l);
+                ScoreView();
+
+                button3.Enabled = false;
+                button4.Enabled = true;
             }
         }
 
@@ -392,6 +404,11 @@ namespace HangmanGame
         private void button2_MouseDown(object sender, MouseEventArgs e)
         {
             Reset();
+        }
+
+        private void stageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            draw();
         }
 
     }
